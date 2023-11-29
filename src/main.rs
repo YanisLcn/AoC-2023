@@ -15,10 +15,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         None => last_unlocked_day(year).expect("AoC 2023 is not unlocked yet"),
     };
 
-    let part = match command_argument.part {
-        Some(part) => part,
-        None => 1,
-    };
+    let part = command_argument.part.unwrap_or(1);
 
     let input_filename = format!("input/day{}.txt", day);
 
