@@ -11,7 +11,7 @@ function create_day() {
 
     { 
     echo "pub fn part1() -> String {" ;
-    echo "    let path = \"../../$INPUTS/day$DAY.txt\";" ;
+    echo "    let path = \"$INPUTS/day$DAY.txt\";" ;
     echo "    let input = std::fs::read_to_string(path).unwrap();" ;
     echo "    \"\".to_string()";
     echo "}";
@@ -19,7 +19,7 @@ function create_day() {
     echo "" ;
 
     echo "pub fn part2() -> String {" ;
-    echo "    let path = \"../../$INPUTS/day$DAY.txt\";" ;
+    echo "    let path = \"$INPUTS/day$DAY.txt\";" ;
     echo "    let input = std::fs::read_to_string(path).unwrap();" ;
     echo "    \"\".to_string()";
     echo "}"; 

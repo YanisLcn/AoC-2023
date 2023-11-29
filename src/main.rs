@@ -5,11 +5,14 @@ use clap::Parser;
 use AoC_2023::{day_executer::execute_day, parser::CommandArgument};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    dotenv::dotenv().ok();
+
     let command_argument = CommandArgument::parse();
+    let year = 2023;
 
     let day = match command_argument.day {
         Some(day) => day,
-        None => last_unlocked_day(2023).unwrap(),
+        None => last_unlocked_day(year).expect("AoC 2023 is not unlocked yet"),
     };
 
     let part = match command_argument.part {
@@ -21,8 +24,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let client = AocClient::builder()
         .session_cookie_from_default_locations()?
+        .year(year)?
         .day(day)?
-        .year(2023)?
         .input_filename(&input_filename)
         .build()?;
 
