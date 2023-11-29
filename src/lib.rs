@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+
 pub mod day_executer;
 pub mod parser;
 

@@ -2,7 +2,7 @@ use std::path::Path;
 
 use aoc_client::{last_unlocked_day, AocClient};
 use clap::Parser;
-use AoC_2023::{day_executer::execute_day, parser::CommandArgument};
+use aoc_2023::{day_executer::execute_day, parser::CommandArgument};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv::dotenv().ok();
