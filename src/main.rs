@@ -4,19 +4,12 @@ use aoc_2023::{day_executer::execute_day, parser::CommandArgument};
 use aoc_client::{last_unlocked_day, AocClient};
 use clap::Parser;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    dotenv::dotenv().ok();
-
-    let command_argument = CommandArgument::parse();
-    let year = 2023;
-
-    let day = match command_argument.day {
-        Some(day) => day,
-        None => last_unlocked_day(year).expect("AoC 2023 is not unlocked yet"),
-    };
-
-    let part = command_argument.part.unwrap_or(1);
-
+fn run_day(
+    year: i32,
+    day: u32,
+    part: u32,
+    publish: bool,
+) -> Result<(), Box<dyn std::error::Error>> {
     std::fs::create_dir_all("input")?;
 
     let input_filename = format!("input/day{}.txt", day);
@@ -34,7 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let result = execute_day(day, part);
 
-    if command_argument.publish {
+    if publish {
         client
             .submit_answer_and_show_outcome(&part.to_string(), result)
             .unwrap();
@@ -44,3 +37,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    dotenv::dotenv().ok();
+
+    let command_argument = CommandArgument::parse();
+    let year = 2023;
+
+    if command_argument.all {
+        for day in 1..=last_unlocked_day(year).expect("AoC 2023 is not unlocked yet") {
+            for part in 1..=2 {
+                run_day(year, day, part, command_argument.publish)?;
+            }
+        }
+
+        return Ok(());
+    }
+
+    let day = match command_argument.day {
+        Some(day) => day,
+        None => last_unlocked_day(year).expect("AoC 2023 is not unlocked yet"),
+    };
+
+    let part = command_argument.part.unwrap_or(1);
+
+    run_day(year, day, part, command_argument.publish)?;
+
+    Ok(())
+}
+

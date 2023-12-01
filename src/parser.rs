@@ -9,4 +9,7 @@ pub struct CommandArgument {
 
     #[clap(short, long)]
     pub publish: bool,
+
+    #[clap(long)]
+    pub all: bool,
 }
