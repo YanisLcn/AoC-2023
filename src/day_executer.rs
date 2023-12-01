@@ -1,5 +1,4 @@
 pub fn execute_day(day: u32, part: u32) -> String {
-    println!("Executing day {} part {}", day, part);
     match (day, part) {
         (1, 1) => crate::day1::part1(),
         (1, 2) => crate::day1::part2(),
