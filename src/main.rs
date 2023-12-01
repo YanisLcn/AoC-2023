@@ -17,6 +17,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let part = command_argument.part.unwrap_or(1);
 
+    std::fs::create_dir_all("input")?;
+
     let input_filename = format!("input/day{}.txt", day);
 
     let client = AocClient::builder()
