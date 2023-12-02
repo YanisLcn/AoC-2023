@@ -1,3 +1,5 @@
+use std::cmp::max;
+
 use itertools::Itertools;
 
 const MAX_COLORS: [(u32, &'static str); 3] = [(12, "red"), (13, "green"), (14, "blue")];
@@ -48,5 +50,31 @@ pub fn part1() -> String {
 pub fn part2() -> String {
     let path = "input/day2.txt";
     let input = std::fs::read_to_string(path).unwrap();
-    "".to_string()
+
+    format!(
+        "{}",
+        input
+            .lines()
+            .map(|l| l.split(": ").collect_tuple::<(&str, &str)>().unwrap())
+            .map(|(_, clrs)| extract_colors(clrs))
+            .fold(0, |token, clrs| {
+                clrs.iter()
+                    .fold(
+                        vec![(0, "red"), (0, "blue"), (0, "green")],
+                        |colors, part| {
+                            part.iter().fold(colors, |part_colors, (nb, color)| {
+                                part_colors
+                                    .iter()
+                                    .map(|(total, c)| {
+                                        (if c == color { *max(total, nb) } else { *total }, *c)
+                                    })
+                                    .collect()
+                            })
+                        },
+                    )
+                    .iter()
+                    .fold(1, |acc, (t, _)| acc * t)
+                    + token
+            })
+    )
 }
