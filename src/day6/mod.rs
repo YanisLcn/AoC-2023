@@ -40,5 +40,22 @@ pub fn part1() -> String {
 pub fn part2() -> String {
     let path = "input/day6.txt";
     let input = std::fs::read_to_string(path).unwrap();
-    "".to_string()
+    let vecs: Vec<u64> = input
+        .lines()
+        .map(|l| {
+            l.split(":")
+                .last()
+                .unwrap()
+                .replacen(" ", "", usize::MAX)
+                .parse::<u64>().unwrap()
+                
+        })
+        .collect();
+    let time = &vecs[0];
+    let dists = &vecs[1];
+
+    (1..*time).into_iter().fold(0, |counter, k| -> u64 {
+        counter + if k * (*time - k) > *dists { 1 } else { 0 }
+    })
+    .to_string()
 }
